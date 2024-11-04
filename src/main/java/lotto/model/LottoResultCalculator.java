@@ -6,7 +6,6 @@ import java.util.Map;
 import lotto.domain.CalculateResult;
 import lotto.domain.Lotto;
 import lotto.domain.Prize;
-import lotto.dto.CompareResult;
 
 public class LottoResultCalculator {
 
@@ -20,31 +19,33 @@ public class LottoResultCalculator {
         this.matchCounts = initializeMatchCounts();
     }
 
-    private Map<String, Integer> initializeMatchCounts() {
-        Map<String, Integer> result = new HashMap<>();
-        result.put(CalculateResult.THREE_MATCH.getResult(), 0);
-        result.put(CalculateResult.FOUR_MATCH.getResult(), 0);
-        result.put(CalculateResult.FIVE_MATCH.getResult(), 0);
-        result.put(CalculateResult.FIVE_MATCH_WITH_BONUS.getResult(), 0);
-        result.put(CalculateResult.SIX_MATCH.getResult(), 0);
+    private Map<CalculateResult, Integer> initializeMatchCounts() {
+        Map<CalculateResult, Integer> result = new HashMap<>();
+        result.put(CalculateResult.THREE_UNDER_MATCH, 0);
+        result.put(CalculateResult.THREE_MATCH, 0);
+        result.put(CalculateResult.FOUR_MATCH, 0);
+        result.put(CalculateResult.FIVE_MATCH, 0);
+        result.put(CalculateResult.FIVE_MATCH_WITH_BONUS, 0);
+        result.put(CalculateResult.SIX_MATCH, 0);
         return result;
     }
 
-    private final Map<String, Integer> matchCounts;
+    private final Map<CalculateResult, Integer> matchCounts;
 
     public Map<Prize, Integer> calculateResult(Lotto winningNumbers, List<Lotto> lottos, int bonus) {
         for (Lotto lotto : lottos) {
-            CompareResult compareResult = winningNumbers.compareNumbers(lotto, bonus);
-            String calculateResult = compareResult.getResult().getResult();
-            if (calculateResult != null) {
-                matchCounts.put(calculateResult, matchCounts.get(calculateResult) + 1);
-            }
+            CalculateResult calculateResult = winningNumbers.compareNumbers(lotto, bonus);
+            matchCounts.replace(calculateResult, matchCounts.get(calculateResult) + 1);
         }
+
         return mapping(matchCounts);
     }
 
     public double calculateROI(long input, Map<Prize, Integer> input2) {
         double sum = calculateSum(input2);
+        if (sum == 0) {
+            return 0;
+        }
         double result = 0;
         result = ((sum - input) / input) * 100;
         return result;
@@ -58,10 +59,15 @@ public class LottoResultCalculator {
         return sum;
     }
 
-    private Map<Prize, Integer> mapping(Map<String, Integer> input) {
+    private Map<Prize, Integer> mapping(Map<CalculateResult, Integer> input) {
         Map<Prize, Integer> result = new HashMap<>();
-        for (String key : input.keySet()) {
-            Prize prize = Prize.fromMatchCount(input.get(key));
+        for (CalculateResult key : input.keySet()) {
+            if (key == CalculateResult.THREE_UNDER_MATCH) {
+                continue;
+            }
+            System.out.println(key.getMatchCount());
+            System.out.println(key.isSpecial());
+            Prize prize = Prize.fromCalculateResult(key.getMatchCount(), key.isSpecial());
             result.put(prize, input.get(key));
         }
         return result;

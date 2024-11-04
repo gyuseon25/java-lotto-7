@@ -26,7 +26,12 @@ public class LottoNumberGenerator {
 
     private Lotto generateLottoNumbers() {
         List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
-        Collections.sort(numbers);
+        sortLottoNumbers(numbers);
         return new Lotto(numbers);
+    }
+
+    private List<Integer> sortLottoNumbers(List<Integer> numbers) {
+        Collections.sort(numbers);
+        return numbers;
     }
 }

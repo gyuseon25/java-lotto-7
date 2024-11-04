@@ -1,31 +1,32 @@
 package lotto.domain;
 
 public enum CalculateResult {
-    THREE_MATCH("threeMatchCount", 3),
-    FOUR_MATCH("fourMatchCount", 4),
-    FIVE_MATCH("fiveMatchCount", 5),
-    FIVE_MATCH_WITH_BONUS("fiveMatchCountWithBonus", 7),
-    SIX_MATCH("sixMatchCount", 6);
+    THREE_UNDER_MATCH(0, false),
+    THREE_MATCH(3, false),
+    FOUR_MATCH(4, false),
+    FIVE_MATCH(5, false),
+    FIVE_MATCH_WITH_BONUS(5, true),
+    SIX_MATCH(6, false);
 
-    private final String result;
     private final int matchCount;
+    private final boolean isSpecial;
 
-    CalculateResult(String result, int matchCount) {
-        this.result = result;
+    CalculateResult(int matchCount, boolean special) {
         this.matchCount = matchCount;
-    }
-
-    public String getResult() {
-        return result;
+        this.isSpecial = special;
     }
 
     public int getMatchCount() {
         return matchCount;
     }
 
-    public static CalculateResult fromMatchCount(int count) {
+    public boolean isSpecial() {
+        return isSpecial;
+    }
+
+    public static CalculateResult getCalculateResult(int matchCount, boolean isSpecial) {
         for (CalculateResult result : CalculateResult.values()) {
-            if (result.getMatchCount() == count) {
+            if (result.getMatchCount() == matchCount && result.isSpecial() == isSpecial) {
                 return result;
             }
         }

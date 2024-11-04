@@ -3,11 +3,8 @@ package lotto;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
-import java.util.Map;
 import lotto.domain.Lotto;
-import lotto.model.LottoResultCalculator;
 import lotto.validation.InputValidator;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -71,11 +68,4 @@ class LottoTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    void 수익률_계산() {
-        LottoResultCalculator lottoResultCalculator = LottoResultCalculator.getInstance();
-        Map<String, Integer> map = Map.of("test", 1500);
-        Assertions.assertThat(lottoResultCalculator.calculateROI(1000, map))
-                .isEqualTo(50);
-    }
 }

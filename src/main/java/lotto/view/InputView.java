@@ -13,18 +13,18 @@ public class InputView {
     private InputView() {
     }
 
-    public static String readAmount() {
+    public String readAmount() {
         System.out.println("구입금액을 입력해 주세요.");
         return Console.readLine();
     }
 
-    public static String readWinningNumbers() {
+    public String readWinningNumbers() {
         System.out.println("당첨 번호를 입력해 주세요.");
         return Console.readLine();
     }
 
-    public static String readBonusNumber() {
-        System.out.println("보너스 번호를 입력해 주세요.\n");
+    public String readBonusNumber() {
+        System.out.println("보너스 번호를 입력해 주세요.");
         return Console.readLine();
     }
 }

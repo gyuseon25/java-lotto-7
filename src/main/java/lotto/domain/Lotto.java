@@ -1,13 +1,15 @@
 package lotto.domain;
 
+import java.util.HashSet;
 import java.util.List;
-import lotto.dto.CompareResult;
+import java.util.Set;
 
 public class Lotto {
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
         validate(numbers);
+        duplicate(numbers);
         this.numbers = numbers;
     }
 
@@ -17,18 +19,29 @@ public class Lotto {
         }
     }
 
+    private void duplicate(List<Integer> numbers) {
+        Set<Integer> duplicates = new HashSet<>(numbers);
+        if (numbers.size() != duplicates.size()) {
+            throw new IllegalArgumentException("[ERROR] 로또에 중복된 숫자는 들어갈 수 없습니다.");
+        }
+    }
+
     // TODO: 추가 기능 구현
-    public CompareResult compareNumbers(Lotto lotto, int bonus) {
+    public CalculateResult compareNumbers(Lotto lotto, int bonus) {
         int matchCount = 0;
+        boolean isSpecial = false;
         for (int number : lotto.numbers) {
             if (this.numbers.contains(number)) {
                 matchCount++;
             }
         }
         if (matchCount == 5) {
-            checkBonus(bonus);
+            isSpecial = lotto.checkBonus(bonus);
         }
-        return new CompareResult(CalculateResult.fromMatchCount(matchCount));
+        if (matchCount < 3) {
+            return CalculateResult.getCalculateResult(0, false);
+        }
+        return CalculateResult.getCalculateResult(matchCount, isSpecial);
     }
 
     public List<Integer> getNumbers() {
@@ -36,10 +49,7 @@ public class Lotto {
     }
 
 
-    private int checkBonus(int bonus) {
-        if (this.numbers.contains(bonus)) {
-            return 7;
-        }
-        return 5;
+    private boolean checkBonus(int bonus) {
+        return this.numbers.contains(bonus);
     }
 }
