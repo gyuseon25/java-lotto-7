@@ -20,15 +20,15 @@ public class Lotto {
 
     // TODO: 추가 기능 구현
 
-    public List<List<Integer>> getLottoNumbers(int count) {
-        List<List<Integer>> lottoNumbers = new ArrayList<>();
+    public List<Lotto> getLottoNumbers(int count) {
+        List<Lotto> lottoNumbers = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             lottoNumbers.add(generateLottoNumbers());
         }
         return lottoNumbers;
     }
 
-    private List<Integer> generateLottoNumbers() {
-        return Randoms.pickUniqueNumbersInRange(1, 45, 6);
+    private Lotto generateLottoNumbers() {
+        return new Lotto(Randoms.pickUniqueNumbersInRange(1, 45, 6));
     }
 }
