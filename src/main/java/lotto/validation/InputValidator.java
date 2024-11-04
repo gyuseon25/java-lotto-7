@@ -39,6 +39,15 @@ public class InputValidator {
         checkNumberBoundary(numbers);
     }
 
+    public void validateBonusNumber(String input, List<Integer> numbers) {
+        checkNumber(input);
+        int bonus = Integer.parseInt(input);
+        checkNumberBoundary(List.of(bonus));
+        if (numbers.contains(bonus)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_BONUS_NUMBER.getMessage());
+        }
+    }
+
     public void checkNumber(String input) {
         if (!input.matches("[0-9]")) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_NUMBER.getMessage());
