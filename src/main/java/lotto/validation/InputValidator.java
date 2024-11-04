@@ -24,7 +24,14 @@ public class InputValidator {
         return (amount / 1000);
     }
 
-    private void checkNumber(String input) {
+    public void validateWinningNumbers(String input) {
+        String[] splits = input.split(",");
+        for (String split : splits) {
+            checkNumber(split);
+        }
+    }
+
+    public void checkNumber(String input) {
         if (!input.matches("[0-9]")) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_NUMBER.getMessage());
         }
