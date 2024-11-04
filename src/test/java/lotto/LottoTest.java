@@ -36,4 +36,13 @@ class LottoTest {
         assertThatThrownBy(() -> inputValidator.validateAmount("test"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void 당첨_번호에_잘못된_값_입력시_예외가_발생한다() {
+        InputValidator inputValidator = InputValidator.getInstance();
+        assertThatThrownBy(() -> inputValidator.validateWinningNumbers("1,2,3,4,5,a"))
+                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputValidator.validateWinningNumbers("1!2!3!4!5!6"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
