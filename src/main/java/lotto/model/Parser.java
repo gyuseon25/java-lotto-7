@@ -14,12 +14,12 @@ public class Parser {
     private Parser() {
     }
 
-    public List<Integer> parseWinningNumbers(String input) {
+    public Lotto parseWinningNumbers(String input) {
         String[] splits = input.split(",");
         List<Integer> numbers = new ArrayList<>();
         for (String split : splits) {
             numbers.add(Integer.parseInt(split));
         }
-        return numbers;
+        return new Lotto(numbers);
     }
 }
