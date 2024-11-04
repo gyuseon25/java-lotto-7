@@ -3,8 +3,11 @@ package lotto;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+import java.util.Map;
 import lotto.domain.Lotto;
+import lotto.model.LottoResultCalculator;
 import lotto.validation.InputValidator;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -66,5 +69,13 @@ class LottoTest {
         InputValidator inputValidator = InputValidator.getInstance();
         assertThatThrownBy(() -> inputValidator.validateBonusNumber("3", List.of(1, 2, 3, 4, 5, 6)))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 수익률_계산() {
+        LottoResultCalculator lottoResultCalculator = LottoResultCalculator.getInstance();
+        Map<String, Integer> map = Map.of("test", 1500);
+        Assertions.assertThat(lottoResultCalculator.calculateROI(1000, map))
+                .isEqualTo(50);
     }
 }
