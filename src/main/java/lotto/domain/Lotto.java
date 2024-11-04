@@ -1,8 +1,5 @@
 package lotto.domain;
 
-import camp.nextstep.edu.missionutils.Randoms;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import lotto.dto.CompareResult;
 
@@ -21,15 +18,6 @@ public class Lotto {
     }
 
     // TODO: 추가 기능 구현
-
-    public List<Lotto> getLottoNumbers(int count) {
-        List<Lotto> lottoNumbers = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            lottoNumbers.add(generateLottoNumbers());
-        }
-        return lottoNumbers;
-    }
-
     public CompareResult compareNumbers(Lotto lotto, int bonus) {
         int matchCount = 0;
         for (int number : lotto.numbers) {
@@ -43,11 +31,6 @@ public class Lotto {
         return new CompareResult(CalculateResult.fromMatchCount(matchCount));
     }
 
-    private Lotto generateLottoNumbers() {
-        List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
-        Collections.sort(numbers);
-        return new Lotto(numbers);
-    }
 
     private int checkBonus(int bonus) {
         if (this.numbers.contains(bonus)) {
