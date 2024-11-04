@@ -9,7 +9,7 @@ public enum Prize {
     FIFTH_PRIZE(3, 5000, "5,000원", false);
 
     private final int matchCount;
-    private final int prize;
+    private final long prize;
     private final String prizeString;
     private final boolean isSpecial;
 
@@ -24,7 +24,7 @@ public enum Prize {
         return matchCount;
     }
 
-    public int getPrize() {
+    public long getPrize() {
         return prize;
     }
 

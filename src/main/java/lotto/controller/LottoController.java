@@ -55,7 +55,7 @@ public class LottoController {
                 bonus);
         outputView.printResults(matchCount);
 
-        double roi = lottoResultCalculator.calculateROI((long) amount, matchCount);
+        String roi = lottoResultCalculator.calculateROI(Long.parseLong(input1), matchCount);
         outputView.printROI(roi);
 
     }
