@@ -3,6 +3,7 @@ package lotto;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+import lotto.model.Lotto;
 import lotto.validation.InputValidator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,13 @@ class LottoTest {
         assertThatThrownBy(() -> inputValidator.validateWinningNumbers("1,2,3,4,5,a"))
                 .isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> inputValidator.validateWinningNumbers("1!2!3!4!5!6"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 당첨_번호에_중복된_번호_입력시_예외가_발생한다() {
+        InputValidator inputValidator = InputValidator.getInstance();
+        assertThatThrownBy(() -> inputValidator.validateWinningNumbers("1,2,3,4,5,5,"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
