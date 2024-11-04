@@ -31,6 +31,10 @@ public class Lotto {
         return new CompareResult(CalculateResult.fromMatchCount(matchCount));
     }
 
+    public List<Integer> getNumbers() {
+        return numbers;
+    }
+
 
     private int checkBonus(int bonus) {
         if (this.numbers.contains(bonus)) {
