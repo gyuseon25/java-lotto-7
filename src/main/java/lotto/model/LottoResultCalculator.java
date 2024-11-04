@@ -42,4 +42,19 @@ public class LottoResultCalculator {
         return matchCounts;
     }
 
+    public double calculateROI(long input, Map<String, Integer> matchCounts) {
+        double sum = calculateSum(matchCounts);
+        double result = 0;
+        result = ((sum - input) / input) * 100;
+        return result;
+    }
+
+    private long calculateSum(Map<String, Integer> input) {
+        long sum = 0;
+        for (String key : input.keySet()) {
+            sum += input.get(key);
+        }
+        return sum;
+    }
+
 }
