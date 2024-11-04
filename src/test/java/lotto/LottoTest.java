@@ -60,4 +60,11 @@ class LottoTest {
         assertThatThrownBy(() -> inputValidator.validateWinningNumbers("1,2,3,4,5,47"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void 당첨번호와_같은_보너스번호_입력시_예외가_발생한다() {
+        InputValidator inputValidator = InputValidator.getInstance();
+        assertThatThrownBy(() -> inputValidator.validateBonusNumber("3", List.of(1, 2, 3, 4, 5, 6)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
