@@ -50,7 +50,14 @@ class LottoTest {
     @Test
     void 당첨_번호에_중복된_번호_입력시_예외가_발생한다() {
         InputValidator inputValidator = InputValidator.getInstance();
-        assertThatThrownBy(() -> inputValidator.validateWinningNumbers("1,2,3,4,5,5,"))
+        assertThatThrownBy(() -> inputValidator.validateWinningNumbers("1,2,3,4,5,5"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 당첨_번호에_1부터_45외의_숫자를_입력시_예외가_발생한다() {
+        InputValidator inputValidator = InputValidator.getInstance();
+        assertThatThrownBy(() -> inputValidator.validateWinningNumbers("1,2,3,4,5,47"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
