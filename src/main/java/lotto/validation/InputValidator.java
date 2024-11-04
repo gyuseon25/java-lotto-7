@@ -36,6 +36,7 @@ public class InputValidator {
             numbers.add(Integer.parseInt(split));
         }
         checkDuplicate(numbers);
+        checkNumberBoundary(numbers);
     }
 
     public void checkNumber(String input) {
@@ -48,6 +49,14 @@ public class InputValidator {
         Set<Integer> set = new HashSet<Integer>(input);
         if (set.size() != input.size()) {
             throw new IllegalArgumentException(ErrorMessage.DUPLICATE_NUMBER.getMessage());
+        }
+    }
+
+    private void checkNumberBoundary(List<Integer> input) {
+        for (Integer i : input) {
+            if (i < 1 || i > 45) {
+                throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER_BOUNDARY.getMessage());
+            }
         }
     }
 
